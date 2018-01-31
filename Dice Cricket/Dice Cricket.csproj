@@ -49,7 +49,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Team.cs" />
-    <Compile Include="TeamDetails.cs" />
     <Compile Include="TeamSelection.cs" />
   </ItemGroup>
   <ItemGroup>

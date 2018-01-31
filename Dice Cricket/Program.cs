@@ -1,14 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="Program.cs" company="Falkon">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Dice_Cricket
 {
-    class Program
+    using System;
+
+    /// <summary>
+    /// Handles starting of program
+    /// </summary>
+    internal class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Main entry point of application
+        /// </summary>
+        /// <param name="args">Console line arguments</param>
+        private static void Main(string[] args)
         {
             var gameEngine = new GameEngine();
             gameEngine.Engine();

@@ -6,17 +6,52 @@
 
 namespace Dice_Cricket
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     /// <summary>
     /// Creation of the team and details
     /// </summary>
     public class Team
     {
+        /// <summary>
+        /// Enum listing batting milestones in their innings
+        /// </summary>
+        public enum Milestone
+        {
+            /// <summary>
+            /// Batter has not reached any milestones
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Batter has previously hit a half century
+            /// </summary>
+            HalfCentury,
+
+            /// <summary>
+            /// Batter has previously hit a century
+            /// </summary>
+            Century,
+
+            /// <summary>
+            /// Batter has previously hit 150 runs
+            /// </summary>
+            OneAndAHalfCentury,
+
+            /// <summary>
+            /// Batter has previously hit a double century
+            /// </summary>
+            DoubleCentury,
+
+            /// <summary>
+            /// Batter has previously hit 250 runs
+            /// </summary>
+            DoubleAndAHalfCentury,
+
+            /// <summary>
+            /// Batter has previously hit a triple century
+            /// </summary>
+            TripleCentury
+        }
+
         /// <summary>
         /// Populates the details of the team selected
         /// </summary>
@@ -28,17 +63,18 @@ namespace Dice_Cricket
             TeamDetails[] team = new Team.TeamDetails[11];
             for (int i = 0; i < 11; i++)
             {
-                if (i == 1)
+                team[i].LastMileStone = Milestone.None;
+                if (i == 0)
                 {
                     team[i].BattingStatus = "Facing";
                 }
 
-                if (i == 2)
+                if (i == 1)
                 {
                     team[i].BattingStatus = "At Bat";
                 }
 
-                if (i > 2)
+                if (i > 1)
                 {
                     team[i].BattingStatus = "Not Yet Batted";
                 }
@@ -71,6 +107,7 @@ namespace Dice_Cricket
                     team[9].PlayerName = "Amir Hamza";
                     team[10].PlayerName = "Shapoor Zadran";
                     break;
+
                 case 2:
                     team[0].TeamName = "Australia";
                     team[0].PlayerName = "David Warner";
@@ -85,6 +122,7 @@ namespace Dice_Cricket
                     team[9].PlayerName = "Patrick Cummins";
                     team[10].PlayerName = "Josh Hazlewood";
                     break;
+
                 case 3:
                     team[0].TeamName = "Bangladesh";
                     team[0].PlayerName = "Imrul Kayes";
@@ -98,6 +136,7 @@ namespace Dice_Cricket
                     team[8].PlayerName = "Rubel Hossain";
                     team[9].PlayerName = "Subashis Roy";
                     team[10].PlayerName = "Mustafizur Rahman";
+                    break;
             }
 
             return team;
@@ -132,6 +171,11 @@ namespace Dice_Cricket
             /// Score of the individual player
             /// </summary>
             public int Score;
+
+            /// <summary>
+            /// The last batting milestone a batter has reached
+            /// </summary>
+            public Milestone LastMileStone;
 
             /// <summary>
             /// Boolean to see if player is a bowler
