@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Team.cs" company="Falkon">
+// <copyright file="Team.cs" company="Jonathan le Grange">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -60,7 +60,21 @@ namespace Dice_Cricket
         public TeamDetails[] PopulateTeamPlayers(int teamSelected)
         {
             Team teamName = new Team();
-            TeamDetails[] team = new Team.TeamDetails[11];
+            TeamDetails[] team = new TeamDetails[11];
+
+            team = GenerateTeamStatus(team);
+
+            team = PopulatePlayers(teamSelected, team);
+
+            return team;
+        }
+
+        /// <summary>
+        /// Generates the status of each player
+        /// </summary>
+        /// <param name="team"></param>
+        private TeamDetails[] GenerateTeamStatus(TeamDetails[] team)
+        {
             for (int i = 0; i < 11; i++)
             {
                 team[i].LastMileStone = Milestone.None;
@@ -90,7 +104,11 @@ namespace Dice_Cricket
                     team[i].IsBowler = true;
                 }
             }
+            return team;
+        }
 
+        private TeamDetails[] PopulatePlayers(int teamSelected, TeamDetails[] team)
+        {
             switch (teamSelected)
             {
                 case 1:
@@ -136,6 +154,201 @@ namespace Dice_Cricket
                     team[8].PlayerName = "Rubel Hossain";
                     team[9].PlayerName = "Subashis Roy";
                     team[10].PlayerName = "Mustafizur Rahman";
+                    break;
+
+                case 4:
+                    team[0].TeamName = "England";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 5:
+                    team[0].TeamName = "Guernsey";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 6:
+                    team[0].TeamName = "India";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 7:
+                    team[0].TeamName = "Ireland";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 8:
+                    team[0].TeamName = "Jersey";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 9:
+                    team[0].TeamName = "Netherlands";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 10:
+                    team[0].TeamName = "New Zealand";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 11:
+                    team[0].TeamName = "Pakistan";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 12:
+                    team[0].TeamName = "South Africa";
+                    team[0].PlayerName = "Aidan Markham";
+                    team[1].PlayerName = "Dean Elgar";
+                    team[2].PlayerName = "Hashim Amla";
+                    team[3].PlayerName = "AB de Villiers";
+                    team[4].PlayerName = "Faf du Plessis";
+                    team[5].PlayerName = "Quinton de Kock";
+                    team[6].PlayerName = "Temba Bavumba";
+                    team[7].PlayerName = "Vernon Philander";
+                    team[8].PlayerName = "Khagiso Rabada";
+                    team[9].PlayerName = "Dale Steyn";
+                    team[10].PlayerName = "Morne Morkel";
+                    break;
+
+                case 13:
+                    team[0].TeamName = "Sri Lanka";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 14:
+                    team[0].TeamName = "West Indies";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 15:
+                    team[0].TeamName = "Zimbabwe";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
+                    break;
+
+                case 16:
+                    team[0].TeamName = "Scotland";
+                    team[0].PlayerName = "";
+                    team[1].PlayerName = "";
+                    team[2].PlayerName = "";
+                    team[3].PlayerName = "";
+                    team[4].PlayerName = "";
+                    team[5].PlayerName = "";
+                    team[6].PlayerName = "";
+                    team[7].PlayerName = "";
+                    team[8].PlayerName = "";
+                    team[9].PlayerName = "";
+                    team[10].PlayerName = "";
                     break;
             }
 

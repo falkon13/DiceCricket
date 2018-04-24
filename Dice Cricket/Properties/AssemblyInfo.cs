@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="Falkon">
+// <copyright file="AssemblyInfo.cs" company="Jonathan le Grange">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------

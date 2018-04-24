@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="GameEngine.cs" company="Falkon">
+// <copyright file="GameEngine.cs" company="Jonathan le Grange">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -34,26 +34,22 @@ namespace Dice_Cricket
         private int wickets;
 
         /// <summary>
+        /// The current tournament round of the user.
+        /// </summary>
+        private string currentRound = "Round of 16";
+
+        /// <summary>
         /// Method that holds the game engine logic.
         /// </summary>
         public void Engine()
         {
-            var gameEngine = new GameEngine();
-            Team userTeam = new Team();
-            Team computerTeam = new Team();
-            int teamSelected = TeamSelection.UserSelectingTeam();
+            var setup = MatchSetup();
 
-            var userTeamDetails = userTeam.PopulateTeamPlayers(teamSelected);
-            var computerTeamDetails = computerTeam.PopulateTeamPlayers(1);
-            string userTeamName = userTeamDetails[0].TeamName;
-            string computerTeamName = computerTeamDetails[0].TeamName;
-            Console.WriteLine($"Welcome to today's match, it's {computerTeamDetails[0].TeamName} vs {userTeamDetails[0].TeamName}");
-            gameEngine.CoinToss();
-            Console.WriteLine($"Here is the line up for {userTeamDetails[0].TeamName}");
-            this.DisplayTeam(teamSelected);
-            Console.WriteLine("The game is ready to play. Press any key to start");
-            Console.ReadKey();
-            gameEngine.ScoreBoard(userTeamName, computerTeamName, userTeamDetails);
+            var userTeam = setup.Item1;
+            var computerTeam = setup.Item2;
+            var gameEngine = setup.Item3;
+            var userTeamDetails = setup.Item4;
+            var computerTeamDetails = setup.Item5;
 
             while (gameEngine.wickets < 10)
             {
@@ -82,10 +78,12 @@ namespace Dice_Cricket
             if (userScore > computerScore)
             {
                 Console.WriteLine("USER WINS");
+                Console.WriteLine("You have progressed to the next round!");
             }
             if (computerScore > userScore)
             {
                 Console.WriteLine("COMPUTER WINS");
+                Console.WriteLine($"You have been knocked out at the {currentRound}");
             }
             if (computerScore == userScore)
             {
@@ -93,15 +91,13 @@ namespace Dice_Cricket
             }
 
             this.DisplayInningsScoreboard(computerTeamDetails);
-
-            Console.WriteLine("END");
         }
 
         /// <summary>
         /// Displays the team and their lineup.
         /// </summary>
         /// <param name="teamSelected">The team selected</param>
-        public void DisplayTeam(int teamSelected)
+        private void DisplayTeam(int teamSelected)
         {
             var teamToDisplay = new Team();
             var teamToDisplayDetails = teamToDisplay.PopulateTeamPlayers(teamSelected);
@@ -109,6 +105,30 @@ namespace Dice_Cricket
             {
                 Console.WriteLine($"{i + 1} {teamToDisplayDetails[i].PlayerName}");
             }
+        }
+
+        private Tuple<Team, Team, GameEngine, Team.TeamDetails[], Team.TeamDetails[]> MatchSetup()
+        {
+            var gameEngine = new GameEngine();
+            Team userTeam = new Team();
+            Team computerTeam = new Team();
+            int teamSelected = TeamSelection.UserSelectingTeam();
+
+            int computerTeamSelected = TeamSelection.ComputerSelectingTeam(teamSelected, null);
+
+            var userTeamDetails = userTeam.PopulateTeamPlayers(teamSelected);
+            var computerTeamDetails = computerTeam.PopulateTeamPlayers(2); //computerTeamSelected
+            string userTeamName = userTeamDetails[0].TeamName;
+            string computerTeamName = computerTeamDetails[0].TeamName;
+            Console.WriteLine($"Welcome to today's match, it's {computerTeamDetails[0].TeamName} vs {userTeamDetails[0].TeamName}");
+            gameEngine.CoinToss();
+            Console.WriteLine($"Here is the line up for {userTeamDetails[0].TeamName}");
+            this.DisplayTeam(teamSelected);
+            Console.WriteLine("The game is ready to play. Press any key to start");
+            Console.ReadKey();
+            gameEngine.ScoreBoard(userTeamName, computerTeamName, userTeamDetails);
+
+            return Tuple.Create(userTeam, computerTeam, gameEngine, userTeamDetails, computerTeamDetails);
         }
 
         /// <summary>
