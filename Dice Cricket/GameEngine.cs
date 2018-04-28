@@ -41,15 +41,16 @@ namespace Dice_Cricket
         /// <summary>
         /// Method that holds the game engine logic.
         /// </summary>
-        public void Engine()
+        public void Engine(int userTeamNumb)
         {
-            var setup = MatchSetup();
+            var setup = MatchSetup(userTeamNumb);
 
             var userTeam = setup.Item1;
             var computerTeam = setup.Item2;
             var gameEngine = setup.Item3;
             var userTeamDetails = setup.Item4;
             var computerTeamDetails = setup.Item5;
+            userTeamNumb = setup.Item6;
 
             while (gameEngine.wickets < 10)
             {
@@ -79,6 +80,8 @@ namespace Dice_Cricket
             {
                 Console.WriteLine("USER WINS");
                 Console.WriteLine("You have progressed to the next round!");
+                currentRound = "Quarter Final";
+                NewGame(userTeamNumb);
             }
             if (computerScore > userScore)
             {
@@ -91,6 +94,11 @@ namespace Dice_Cricket
             }
 
             this.DisplayInningsScoreboard(computerTeamDetails);
+        }
+
+        private void NewGame(int userTeam)
+        {
+            Engine(userTeam);
         }
 
         /// <summary>
@@ -107,28 +115,44 @@ namespace Dice_Cricket
             }
         }
 
-        private Tuple<Team, Team, GameEngine, Team.TeamDetails[], Team.TeamDetails[]> MatchSetup()
+        private Tuple<Team, Team, GameEngine, Team.TeamDetails[], Team.TeamDetails[], int> MatchSetup(int userSelectedTeam)
         {
             var gameEngine = new GameEngine();
             Team userTeam = new Team();
             Team computerTeam = new Team();
-            int teamSelected = TeamSelection.UserSelectingTeam();
+            int teamSelected;
+
+            if (userSelectedTeam == 0)
+            {
+                teamSelected = TeamSelection.UserSelectingTeam();
+            }
+            else
+            {
+                teamSelected = userSelectedTeam;
+            }
 
             int computerTeamSelected = TeamSelection.ComputerSelectingTeam(teamSelected, null);
 
             var userTeamDetails = userTeam.PopulateTeamPlayers(teamSelected);
-            var computerTeamDetails = computerTeam.PopulateTeamPlayers(2); //computerTeamSelected
+            var computerTeamDetails = computerTeam.PopulateTeamPlayers(computerTeamSelected); //computerTeamSelected
             string userTeamName = userTeamDetails[0].TeamName;
+
             string computerTeamName = computerTeamDetails[0].TeamName;
+
             Console.WriteLine($"Welcome to today's match, it's {computerTeamDetails[0].TeamName} vs {userTeamDetails[0].TeamName}");
+
             gameEngine.CoinToss();
+
             Console.WriteLine($"Here is the line up for {userTeamDetails[0].TeamName}");
             this.DisplayTeam(teamSelected);
+            Console.WriteLine($"And here is the line up for {computerTeamDetails[0].TeamName}");
+            this.DisplayTeam(computerTeamSelected);
+
             Console.WriteLine("The game is ready to play. Press any key to start");
             Console.ReadKey();
             gameEngine.ScoreBoard(userTeamName, computerTeamName, userTeamDetails);
 
-            return Tuple.Create(userTeam, computerTeam, gameEngine, userTeamDetails, computerTeamDetails);
+            return Tuple.Create(userTeam, computerTeam, gameEngine, userTeamDetails, computerTeamDetails, teamSelected);
         }
 
         /// <summary>

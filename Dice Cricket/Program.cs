@@ -19,7 +19,7 @@ namespace Dice_Cricket
         private static void Main(string[] args)
         {
             var gameEngine = new GameEngine();
-            gameEngine.Engine();
+            gameEngine.Engine(0);
             Console.ReadKey();
         }
     }

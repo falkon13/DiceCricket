@@ -218,17 +218,17 @@ namespace Dice_Cricket
 
                 case 8:
                     team[0].TeamName = "Jersey";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
-                    team[2].PlayerName = "";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[0].PlayerName = "Peter Gough";
+                    team[1].PlayerName = "Nathaniel Watkins";
+                    team[2].PlayerName = "Ben Stevens";
+                    team[3].PlayerName = "Jonty Jenner";
+                    team[4].PlayerName = "Corey Bisson";
+                    team[5].PlayerName = "Harrison Carlyon";
+                    team[6].PlayerName = "Anthony Hawkins-Kay";
+                    team[7].PlayerName = "Corne Bodenstein";
+                    team[8].PlayerName = "Jake Dunford";
+                    team[9].PlayerName = "Charles Perchard";
+                    team[10].PlayerName = "Ben Kynman";
                     break;
 
                 case 9:
