@@ -72,7 +72,8 @@ namespace Dice_Cricket
         /// <summary>
         /// Generates the status of each player
         /// </summary>
-        /// <param name="team"></param>
+        /// <param name="team">The team to get status for</param>
+        /// <returns>Relevant team details</returns>
         private TeamDetails[] GenerateTeamStatus(TeamDetails[] team)
         {
             for (int i = 0; i < 11; i++)
@@ -104,9 +105,16 @@ namespace Dice_Cricket
                     team[i].IsBowler = true;
                 }
             }
+
             return team;
         }
 
+        /// <summary>
+        /// Populates teams with player details
+        /// </summary>
+        /// <param name="teamSelected">The team selected</param>
+        /// <param name="team">Details of the team selected</param>
+        /// <returns>Details of the team selected with player names</returns>
         private TeamDetails[] PopulatePlayers(int teamSelected, TeamDetails[] team)
         {
             switch (teamSelected)
@@ -158,17 +166,17 @@ namespace Dice_Cricket
 
                 case 4:
                     team[0].TeamName = "England";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
-                    team[2].PlayerName = "";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[0].PlayerName = "Alastair Cook";
+                    team[1].PlayerName = "Mark Stoneman";
+                    team[2].PlayerName = "James Vince";
+                    team[3].PlayerName = "Joe Root";
+                    team[4].PlayerName = "Dawid Malan";
+                    team[5].PlayerName = "Ben Stokes";
+                    team[6].PlayerName = "Jonny Bairstow";
+                    team[7].PlayerName = "Stuart Broad";
+                    team[8].PlayerName = "Mark Wood";
+                    team[9].PlayerName = "Jack Leach";
+                    team[10].PlayerName = "James Anderson";
                     break;
 
                 case 5:
