@@ -95,7 +95,7 @@ namespace Dice_Cricket
 
                 team[i].BattingOrder = i + 1;
                 team[i].Score = 0;
-                if (i < 5)
+                if (i < 7)
                 {
                     team[i].IsBowler = false;
                 }

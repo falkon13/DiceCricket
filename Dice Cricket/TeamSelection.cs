@@ -6,13 +6,14 @@
 namespace Dice_Cricket
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Class handling the selection of teams
     /// </summary>
     public static class TeamSelection
     {
-        private const int NumberOfTeams = 15;
+        private const int NumberOfTeams = 16;
 
         /// <summary>
         /// Method handling the selection of a team by a user
@@ -37,7 +38,13 @@ namespace Dice_Cricket
             Console.WriteLine("14 : West Indies");
             Console.WriteLine("15 : Zimbabwe");
             Console.WriteLine("16 : Scotland");
-            int team = Convert.ToInt32(Console.ReadLine());
+
+            int team;
+            while (!int.TryParse(Console.ReadLine(), out team))
+            {
+                Console.WriteLine("Invalid selection");
+                Console.WriteLine("Please input a number between 1 and 16");
+            }
 
             switch (team)
             {
@@ -111,13 +118,14 @@ namespace Dice_Cricket
             }
         }
 
-        public static int ComputerSelectingTeam(int userTeam, int?[] previousTeams)
+        public static int ComputerSelectingTeam(int userTeam, IList<int> availableTeams)
         {
             Random teamSelect = new Random();
             int team = teamSelect.Next(1, NumberOfTeams);
 
             // Also need to check previous teams
-            while (team == userTeam)
+
+            while (!availableTeams.Contains(team))
             {
                 team = teamSelect.Next(1, NumberOfTeams);
             }

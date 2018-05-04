@@ -7,6 +7,8 @@
 namespace Dice_Cricket
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// The simulation of the game itself, holds all game logic.
@@ -38,12 +40,14 @@ namespace Dice_Cricket
         /// </summary>
         private string currentRound = "Round of 16";
 
+        private IList<int> availableTeams = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+
         /// <summary>
         /// Method that holds the game engine logic.
         /// </summary>
         public void Engine(int userTeamNumb)
         {
-            var setup = MatchSetup(userTeamNumb);
+            var setup = MatchSetup(userTeamNumb, currentRound);
 
             var userTeam = setup.Item1;
             var computerTeam = setup.Item2;
@@ -54,7 +58,7 @@ namespace Dice_Cricket
 
             while (gameEngine.wickets < 10)
             {
-                userTeamDetails = gameEngine.BowlBalled(userTeamDetails);
+                userTeamDetails = gameEngine.BowlBalled(userTeamDetails, computerTeamDetails);
 
                 Console.ReadKey();
             }
@@ -70,7 +74,7 @@ namespace Dice_Cricket
 
             while (gameEngine.wickets < 10 && gameEngine.score <= userScore)
             {
-                computerTeamDetails = gameEngine.BowlBalled(computerTeamDetails);
+                computerTeamDetails = gameEngine.BowlBalled(computerTeamDetails, userTeamDetails);
 
                 Console.ReadKey();
             }
@@ -80,8 +84,33 @@ namespace Dice_Cricket
             {
                 Console.WriteLine("USER WINS");
                 Console.WriteLine("You have progressed to the next round!");
-                currentRound = "Quarter Final";
-                NewGame(userTeamNumb);
+                switch (currentRound)
+                {
+                    case "Round of 16":
+                        currentRound = "Quarter Final";
+
+                        availableTeams = KnockoutTeams(7, availableTeams);
+                        NewGame(userTeamNumb);
+
+                        break;
+
+                    case "Quarter Final":
+                        currentRound = "Semi Final";
+                        availableTeams = KnockoutTeams(3, availableTeams);
+                        NewGame(userTeamNumb);
+
+                        break;
+
+                    case "Semi Final":
+                        currentRound = "Final";
+                        availableTeams = KnockoutTeams(1, availableTeams);
+                        NewGame(userTeamNumb);
+                        break;
+
+                    case "Final":
+                        Console.WriteLine("You did it! YOU WON!!!!!!!!!!!!!!!!!!!!!!!!!");
+                        break;
+                }
             }
             if (computerScore > userScore)
             {
@@ -94,6 +123,20 @@ namespace Dice_Cricket
             }
 
             this.DisplayInningsScoreboard(computerTeamDetails);
+        }
+
+        private IList<int> KnockoutTeams(int teamsLeft, IList<int> teams)
+        {
+            Random random = new Random();
+            while (teams.Count > teamsLeft)
+            {
+                int randomTeam = random.Next(1, 16);
+                if (teams.Contains(randomTeam))
+                {
+                    teams.Remove(randomTeam);
+                }
+            }
+            return teams;
         }
 
         private void NewGame(int userTeam)
@@ -115,7 +158,7 @@ namespace Dice_Cricket
             }
         }
 
-        private Tuple<Team, Team, GameEngine, Team.TeamDetails[], Team.TeamDetails[], int> MatchSetup(int userSelectedTeam)
+        private Tuple<Team, Team, GameEngine, Team.TeamDetails[], Team.TeamDetails[], int> MatchSetup(int userSelectedTeam, string currentRound)
         {
             var gameEngine = new GameEngine();
             Team userTeam = new Team();
@@ -125,21 +168,32 @@ namespace Dice_Cricket
             if (userSelectedTeam == 0)
             {
                 teamSelected = TeamSelection.UserSelectingTeam();
+                availableTeams = availableTeams.Where(teams => teams != teamSelected).ToList();
             }
             else
             {
                 teamSelected = userSelectedTeam;
             }
 
-            int computerTeamSelected = TeamSelection.ComputerSelectingTeam(teamSelected, null);
+            int computerTeamSelected = TeamSelection.ComputerSelectingTeam(teamSelected, availableTeams);
+
+            availableTeams = availableTeams.Where(teams => teams != computerTeamSelected).ToList();
 
             var userTeamDetails = userTeam.PopulateTeamPlayers(teamSelected);
-            var computerTeamDetails = computerTeam.PopulateTeamPlayers(computerTeamSelected); //computerTeamSelected
+            var computerTeamDetails = computerTeam.PopulateTeamPlayers(computerTeamSelected);
+
             string userTeamName = userTeamDetails[0].TeamName;
 
             string computerTeamName = computerTeamDetails[0].TeamName;
 
-            Console.WriteLine($"Welcome to today's match, it's {computerTeamDetails[0].TeamName} vs {userTeamDetails[0].TeamName}");
+            if (currentRound != "Final")
+            {
+                Console.WriteLine($"Welcome to today's match, it's a {currentRound} match between  {computerTeamDetails[0].TeamName} and {userTeamDetails[0].TeamName}");
+            }
+            else
+            {
+                Console.WriteLine($"Welcome to today's match, it's the one we've all been waiting for, it's the final between  {computerTeamDetails[0].TeamName} and {userTeamDetails[0].TeamName}");
+            }
 
             gameEngine.CoinToss();
 
@@ -162,7 +216,14 @@ namespace Dice_Cricket
         private bool CoinToss()
         {
             Console.WriteLine("Select Heads(1) or Tails(2)");
-            int choice = Convert.ToInt32(Console.ReadLine());
+
+            int choice;
+            while (!int.TryParse(Console.ReadLine(), out choice))
+            {
+                Console.WriteLine("Invalid selection");
+                Console.WriteLine("Select Heads(1) or Tails(2)");
+            }
+
             Random randomCoinToss = new Random();
             int actual = randomCoinToss.Next(1, 2);
             if (choice == actual)
@@ -210,7 +271,7 @@ namespace Dice_Cricket
         /// </summary>
         /// <param name="team">The batting team</param>
         /// <returns>Details of the batting team</returns>
-        private Team.TeamDetails[] BowlBalled(Team.TeamDetails[] team)
+        private Team.TeamDetails[] BowlBalled(Team.TeamDetails[] battingTeam, Team.TeamDetails[] bowlingTeam)
         {
             Random ballOutcome = new Random();
             int actual = ballOutcome.Next(1, dieSize);
@@ -218,34 +279,37 @@ namespace Dice_Cricket
             int outStatus = isOut.Next(1, dieSize);
             if (actual == 5)
             {
-                if (outStatus == 3)
+                if (outStatus == 3 || outStatus == 6)
                 {
                     this.wickets++;
                     this.BallCommentary(actual);
                     for (int i = 0; i < teamSize; i++)
                     {
-                        if (team[i].BattingStatus == "Facing")
+                        if (battingTeam[i].BattingStatus == "Facing")
                         {
-                            team[i].BattingStatus = "Out";
-                            Console.WriteLine(Environment.NewLine + $" OUT : {team[i].PlayerName} ({team[i].Score})");
+                            battingTeam[i].BattingStatus = "Out";
+                            int bowler = isOut.Next(0, 4);
+                            bowler = 10 - bowler;
+
+                            Console.WriteLine(Environment.NewLine + $" OUT : {battingTeam[i].PlayerName} ({battingTeam[i].Score}) b {bowlingTeam[bowler].PlayerName}");
                         }
 
-                        if (team[i].BattingStatus == "Not Yet Batted")
+                        if (battingTeam[i].BattingStatus == "Not Yet Batted")
                         {
-                            team[i].BattingStatus = "Facing";
+                            battingTeam[i].BattingStatus = "Facing";
                             break;
                         }
                     }
                 }
 
-                if (outStatus != 3)
+                if (outStatus != 3 && outStatus != 6)
                 {
                     Console.WriteLine("It's a dot ball");
                 }
 
-                this.ScoreBoard("SA", "Eng", team);
+                this.ScoreBoard(null, null, battingTeam);
 
-                return team;
+                return battingTeam;
             }
             else
             {
@@ -253,9 +317,9 @@ namespace Dice_Cricket
                 this.score += actual;
                 for (int i = 0; i < teamSize; i++)
                 {
-                    if (team[i].BattingStatus == "Facing")
+                    if (battingTeam[i].BattingStatus == "Facing")
                     {
-                        team[i].Score += actual;
+                        battingTeam[i].Score += actual;
                     }
                 }
 
@@ -265,23 +329,23 @@ namespace Dice_Cricket
                     int y = 0;
                     for (int i = 0; i < teamSize; i++)
                     {
-                        if (team[i].BattingStatus == "Facing")
+                        if (battingTeam[i].BattingStatus == "Facing")
                         {
                             x = i;
                         }
 
-                        if (team[i].BattingStatus == "At Bat")
+                        if (battingTeam[i].BattingStatus == "At Bat")
                         {
                             y = i;
                         }
                     }
 
-                    team[x].BattingStatus = "At Bat";
-                    team[y].BattingStatus = "Facing";
+                    battingTeam[x].BattingStatus = "At Bat";
+                    battingTeam[y].BattingStatus = "Facing";
                 }
-                MilestoneCheck(team);
-                this.ScoreBoard("SA", "Eng", team);
-                return team;
+                MilestoneCheck(battingTeam);
+                this.ScoreBoard(null, null, battingTeam);
+                return battingTeam;
             }
         }
 
