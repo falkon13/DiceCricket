@@ -7,7 +7,6 @@
 namespace Dice_Cricket
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -40,10 +39,8 @@ namespace Dice_Cricket
         /// </summary>
         private string currentRound = "Round of 16";
 
-        /// <summary>
-        /// List of all available teams for AI selection
-        /// </summary>
-        private IList<int> availableTeams = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+        private PostMatch postMatch = new PostMatch();
+        private PreMatch preMatch = new PreMatch();
 
         /// <summary>
         /// Entry point of the game engine
@@ -51,7 +48,7 @@ namespace Dice_Cricket
         /// <param name="userTeamNumb">The user's team</param>
         public void Engine(int userTeamNumb)
         {
-            var setup = this.MatchSetup(userTeamNumb, this.currentRound);
+            var setup = preMatch.MatchSetup(userTeamNumb, this.currentRound);
 
             var userTeam = setup.Item1;
             var computerTeam = setup.Item2;
@@ -84,31 +81,31 @@ namespace Dice_Cricket
             }
 
             int computerScore = gameEngine.score;
-
+            postMatch.CalculateBestPlayer(computerTeamDetails, userTeamDetails);
             if (userScore > computerScore)
             {
                 Console.WriteLine("USER WINS");
                 Console.WriteLine("You have progressed to the next round!");
+
                 switch (this.currentRound)
                 {
                     case "Round of 16":
                         this.currentRound = "Quarter Final";
-
-                        this.availableTeams = this.KnockoutTeams(7, this.availableTeams);
+                        preMatch.AvailableTeams = postMatch.KnockoutTeams(7, preMatch.AvailableTeams);
                         this.NewGame(userTeamNumb);
 
                         break;
 
                     case "Quarter Final":
                         this.currentRound = "Semi Final";
-                        this.availableTeams = this.KnockoutTeams(3, this.availableTeams);
+                        preMatch.AvailableTeams = postMatch.KnockoutTeams(3, preMatch.AvailableTeams);
                         this.NewGame(userTeamNumb);
 
                         break;
 
                     case "Semi Final":
                         this.currentRound = "Final";
-                        this.availableTeams = this.KnockoutTeams(1, this.availableTeams);
+                        preMatch.AvailableTeams = postMatch.KnockoutTeams(1, preMatch.AvailableTeams);
                         this.NewGame(userTeamNumb);
                         break;
 
@@ -133,24 +130,31 @@ namespace Dice_Cricket
         }
 
         /// <summary>
-        /// Removes teams from the list the computer can pick a team from
+        /// The score board keeping track of the score and wickets
         /// </summary>
-        /// <param name="teamsLeft">The number of computer teams left for the round</param>
-        /// <param name="teams">List of currently available teams</param>
-        /// <returns>Available teams</returns>
-        private IList<int> KnockoutTeams(int teamsLeft, IList<int> teams)
+        /// <param name="batters">The team who is batting</param>
+        /// <param name="bowlingTeam">The team who is bowling</param>
+        /// <param name="team">Details of the batting team</param>
+        /// <returns>Returns details of the batting team</returns>
+        public Team.TeamDetails[] ScoreBoard(string batters, string bowlingTeam, Team.TeamDetails[] team)
         {
-            Random random = new Random();
-            while (teams.Count > teamsLeft)
+            Console.WriteLine(string.Empty);
+            for (int i = 0; i < TeamSize; i++)
             {
-                int randomTeam = random.Next(1, 16);
-                if (teams.Contains(randomTeam))
+                if (team[i].BattingStatus == "Facing")
                 {
-                    teams.Remove(randomTeam);
+                    Console.Write($"* {team[i].PlayerName} ({team[i].Score}) ");
+                }
+
+                if (team[i].BattingStatus == "At Bat")
+                {
+                    Console.Write($" {team[i].PlayerName} ({team[i].Score}) ");
                 }
             }
 
-            return teams;
+            Console.WriteLine($" Score : {score} / {wickets} ");
+            Console.WriteLine(string.Empty);
+            return team;
         }
 
         /// <summary>
@@ -174,63 +178,6 @@ namespace Dice_Cricket
             {
                 Console.WriteLine($"{i + 1} {teamToDisplayDetails[i].PlayerName}");
             }
-        }
-
-        /// <summary>
-        /// Setups a match
-        /// </summary>
-        /// <param name="userSelectedTeam">The user's team</param>
-        /// <param name="currentRound">The current tournament round</param>
-        /// <returns>All details for a match </returns>
-        private Tuple<Team, Team, GameEngine, Team.TeamDetails[], Team.TeamDetails[], int> MatchSetup(int userSelectedTeam, string currentRound)
-        {
-            var gameEngine = new GameEngine();
-            Team userTeam = new Team();
-            Team computerTeam = new Team();
-            int teamSelected;
-
-            if (userSelectedTeam == 0)
-            {
-                teamSelected = TeamSelection.UserSelectingTeam();
-                this.availableTeams = this.availableTeams.Where(teams => teams != teamSelected).ToList();
-            }
-            else
-            {
-                teamSelected = userSelectedTeam;
-            }
-
-            int computerTeamSelected = TeamSelection.ComputerSelectingTeam(teamSelected, this.availableTeams);
-
-            this.availableTeams = this.availableTeams.Where(teams => teams != computerTeamSelected).ToList();
-
-            var userTeamDetails = userTeam.PopulateTeamPlayers(teamSelected);
-            var computerTeamDetails = computerTeam.PopulateTeamPlayers(computerTeamSelected);
-
-            string userTeamName = userTeamDetails[0].TeamName;
-
-            string computerTeamName = computerTeamDetails[0].TeamName;
-
-            if (currentRound != "Final")
-            {
-                Console.WriteLine($"Welcome to today's match, it's a {currentRound} match between  {computerTeamDetails[0].TeamName} and {userTeamDetails[0].TeamName}");
-            }
-            else
-            {
-                Console.WriteLine($"Welcome to today's match, it's the one we've all been waiting for, it's the final between  {computerTeamDetails[0].TeamName} and {userTeamDetails[0].TeamName}");
-            }
-
-            gameEngine.CoinToss();
-
-            Console.WriteLine($"Here is the line up for {userTeamDetails[0].TeamName}");
-            this.DisplayTeam(teamSelected);
-            Console.WriteLine($"And here is the line up for {computerTeamDetails[0].TeamName}");
-            this.DisplayTeam(computerTeamSelected);
-
-            Console.WriteLine("The game is ready to play. Press any key to start");
-            Console.ReadKey();
-            gameEngine.ScoreBoard(userTeamName, computerTeamName, userTeamDetails);
-
-            return Tuple.Create(userTeam, computerTeam, gameEngine, userTeamDetails, computerTeamDetails, teamSelected);
         }
 
         /// <summary>
@@ -263,34 +210,6 @@ namespace Dice_Cricket
         }
 
         /// <summary>
-        /// The score board keeping track of the score and wickets
-        /// </summary>
-        /// <param name="batters">The team who is batting</param>
-        /// <param name="bowlingTeam">The team who is bowling</param>
-        /// <param name="team">Details of the batting team</param>
-        /// <returns>Returns details of the batting team</returns>
-        private Team.TeamDetails[] ScoreBoard(string batters, string bowlingTeam, Team.TeamDetails[] team)
-        {
-            Console.WriteLine(string.Empty);
-            for (int i = 0; i < TeamSize; i++)
-            {
-                if (team[i].BattingStatus == "Facing")
-                {
-                    Console.Write($"* {team[i].PlayerName} ({team[i].Score}) ");
-                }
-
-                if (team[i].BattingStatus == "At Bat")
-                {
-                    Console.Write($" {team[i].PlayerName} ({team[i].Score}) ");
-                }
-            }
-
-            Console.WriteLine($" Score : {score} / {wickets} ");
-            Console.WriteLine(string.Empty);
-            return team;
-        }
-
-        /// <summary>
         /// Simulation of a ball being bowled
         /// </summary>
         /// <param name="battingTeam">The batting team</param>
@@ -307,16 +226,13 @@ namespace Dice_Cricket
                 if (outStatus == 3 || outStatus == 6)
                 {
                     this.wickets++;
-                    this.BallCommentary(actual);
+                    int method = this.BallCommentary(actual);
                     for (int i = 0; i < TeamSize; i++)
                     {
                         if (battingTeam[i].BattingStatus == "Facing")
                         {
                             battingTeam[i].BattingStatus = "Out";
-                            int bowler = isOut.Next(0, 4);
-                            bowler = 10 - bowler;
-
-                            Console.WriteLine(Environment.NewLine + $" OUT : {battingTeam[i].PlayerName} ({battingTeam[i].Score}) b {bowlingTeam[bowler].PlayerName}");
+                            DetermineWicket(isOut, battingTeam, bowlingTeam, i, method);
                         }
 
                         if (battingTeam[i].BattingStatus == "Not Yet Batted")
@@ -375,6 +291,47 @@ namespace Dice_Cricket
             }
         }
 
+        private void DetermineWicket(Random isOut, Team.TeamDetails[] battingTeam, Team.TeamDetails[] bowlingTeam, int i, int method)
+        {
+            int bowler = isOut.Next(0, 4);
+            bowler = 10 - bowler;
+            var keeper = (bowlingTeam.Where(m => m.IsKeeper == true).Select(m => m.BattingOrder).First()) - 1;
+            int fielder = isOut.Next(0, 10);
+            while (fielder == keeper || fielder == bowler)
+            {
+                fielder = isOut.Next(0, 10);
+            }
+
+            switch (method)
+            {
+                case 1:
+                    Console.WriteLine(Environment.NewLine + $" OUT : {battingTeam[i].PlayerName} ({battingTeam[i].Score}) b {bowlingTeam[bowler].PlayerName}");
+
+                    break;
+
+                case 2:
+                    Console.WriteLine(Environment.NewLine + $" OUT : {battingTeam[i].PlayerName} ({battingTeam[i].Score}) c †{bowlingTeam[keeper].PlayerName} b {bowlingTeam[bowler].PlayerName}");
+                    bowlingTeam[keeper].FieldingWickets += 1;
+                    break;
+
+                case 3:
+                    Console.WriteLine(Environment.NewLine + $" OUT : {battingTeam[i].PlayerName} ({battingTeam[i].Score}) lbw b {bowlingTeam[bowler].PlayerName}");
+
+                    break;
+
+                case 4:
+                    Console.WriteLine(Environment.NewLine + $" OUT : {battingTeam[i].PlayerName} ({battingTeam[i].Score}) st †{bowlingTeam[keeper].PlayerName} b {bowlingTeam[bowler].PlayerName}");
+                    bowlingTeam[keeper].FieldingWickets += 1;
+                    break;
+
+                case 5:
+                    Console.WriteLine(Environment.NewLine + $" OUT : {battingTeam[i].PlayerName} ({battingTeam[i].Score}) c {bowlingTeam[fielder].PlayerName} b {bowlingTeam[bowler].PlayerName}");
+                    bowlingTeam[fielder].FieldingWickets += 1;
+                    break;
+            }
+            bowlingTeam[bowler].BowlingWickets += 1;
+        }
+
         /// <summary>
         /// Checks the batsmen to see if they have reached a milestone and mention it in the commentary
         /// </summary>
@@ -419,7 +376,7 @@ namespace Dice_Cricket
         /// Commentary to be displayed for every ball.
         /// </summary>
         /// <param name="roll">The score of the roll</param>
-        private void BallCommentary(int roll)
+        private int BallCommentary(int roll)
         {
             Random randomComm = new Random(Guid.NewGuid().GetHashCode());
             int commOutput = randomComm.Next(1, 5);
@@ -529,33 +486,6 @@ namespace Dice_Cricket
 
                     break;
 
-                case 5:
-
-                    switch (commOutput)
-                    {
-                        case 1:
-                            Console.WriteLine("Poor defence and the bails are off, bowled clean");
-                            break;
-
-                        case 2:
-                            Console.WriteLine("He's nicked it and that's a great catch by the keeper. He's gone");
-                            break;
-
-                        case 3:
-                            Console.WriteLine("It hits the pad, the bowler appeals and the finger is up, he's been given LBW");
-                            break;
-
-                        case 4:
-                            Console.WriteLine($"The batsman advances down the wicket he misses it and the keeper whips off the bails. He's out");
-                            break;
-
-                        case 5:
-                            Console.WriteLine("A big slog and that's caught, holed out to mid off");
-                            break;
-                    }
-
-                    break;
-
                 case 6:
                     switch (commOutput)
                     {
@@ -582,6 +512,7 @@ namespace Dice_Cricket
 
                     break;
             }
+            return commOutput;
         }
 
         /// <summary>

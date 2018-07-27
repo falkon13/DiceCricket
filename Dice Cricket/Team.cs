@@ -79,6 +79,7 @@ namespace Dice_Cricket
             for (int i = 0; i < 11; i++)
             {
                 team[i].LastMileStone = Milestone.None;
+                team[i].IsKeeper = false;
                 if (i == 0)
                 {
                     team[i].BattingStatus = "Facing";
@@ -96,6 +97,8 @@ namespace Dice_Cricket
 
                 team[i].BattingOrder = i + 1;
                 team[i].Score = 0;
+                team[i].BowlingWickets = 0;
+                team[i].FieldingWickets = 0;
                 if (i < 7)
                 {
                     team[i].IsBowler = false;
@@ -132,6 +135,8 @@ namespace Dice_Cricket
                     team[8].PlayerName = "Rashid Khan";
                     team[9].PlayerName = "Amir Hamza";
                     team[10].PlayerName = "Shapoor Zadran";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 2:
@@ -147,6 +152,8 @@ namespace Dice_Cricket
                     team[8].PlayerName = "Ashton Agar";
                     team[9].PlayerName = "Patrick Cummins";
                     team[10].PlayerName = "Josh Hazlewood";
+
+                    team[7].IsKeeper = true;
                     break;
 
                 case 3:
@@ -162,6 +169,8 @@ namespace Dice_Cricket
                     team[8].PlayerName = "Rubel Hossain";
                     team[9].PlayerName = "Subashis Roy";
                     team[10].PlayerName = "Mustafizur Rahman";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 4:
@@ -177,13 +186,15 @@ namespace Dice_Cricket
                     team[8].PlayerName = "Mark Wood";
                     team[9].PlayerName = "Jack Leach";
                     team[10].PlayerName = "James Anderson";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 5:
                     team[0].TeamName = "Guernsey";
                     team[0].PlayerName = "";
                     team[1].PlayerName = "";
-                    team[2].PlayerName = "";
+                    team[2].PlayerName = "KEEPS";
                     team[3].PlayerName = "";
                     team[4].PlayerName = "";
                     team[5].PlayerName = "";
@@ -192,13 +203,15 @@ namespace Dice_Cricket
                     team[8].PlayerName = "";
                     team[9].PlayerName = "";
                     team[10].PlayerName = "";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 6:
                     team[0].TeamName = "India";
                     team[0].PlayerName = "";
                     team[1].PlayerName = "";
-                    team[2].PlayerName = "";
+                    team[2].PlayerName = "KEEPS";
                     team[3].PlayerName = "";
                     team[4].PlayerName = "";
                     team[5].PlayerName = "";
@@ -207,13 +220,15 @@ namespace Dice_Cricket
                     team[8].PlayerName = "";
                     team[9].PlayerName = "";
                     team[10].PlayerName = "";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 7:
                     team[0].TeamName = "Ireland";
                     team[0].PlayerName = "";
                     team[1].PlayerName = "";
-                    team[2].PlayerName = "";
+                    team[2].PlayerName = "KEEPS";
                     team[3].PlayerName = "";
                     team[4].PlayerName = "";
                     team[5].PlayerName = "";
@@ -222,6 +237,8 @@ namespace Dice_Cricket
                     team[8].PlayerName = "";
                     team[9].PlayerName = "";
                     team[10].PlayerName = "";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 8:
@@ -237,13 +254,15 @@ namespace Dice_Cricket
                     team[8].PlayerName = "Jake Dunford";
                     team[9].PlayerName = "Charles Perchard";
                     team[10].PlayerName = "Ben Kynman";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 9:
                     team[0].TeamName = "Netherlands";
                     team[0].PlayerName = "";
                     team[1].PlayerName = "";
-                    team[2].PlayerName = "";
+                    team[2].PlayerName = "KEEPS";
                     team[3].PlayerName = "";
                     team[4].PlayerName = "";
                     team[5].PlayerName = "";
@@ -252,13 +271,15 @@ namespace Dice_Cricket
                     team[8].PlayerName = "";
                     team[9].PlayerName = "";
                     team[10].PlayerName = "";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 10:
                     team[0].TeamName = "New Zealand";
                     team[0].PlayerName = "";
                     team[1].PlayerName = "";
-                    team[2].PlayerName = "";
+                    team[2].PlayerName = "KEEPS";
                     team[3].PlayerName = "";
                     team[4].PlayerName = "";
                     team[5].PlayerName = "";
@@ -267,13 +288,15 @@ namespace Dice_Cricket
                     team[8].PlayerName = "";
                     team[9].PlayerName = "";
                     team[10].PlayerName = "";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 11:
                     team[0].TeamName = "Pakistan";
                     team[0].PlayerName = "";
                     team[1].PlayerName = "";
-                    team[2].PlayerName = "";
+                    team[2].PlayerName = "KEEPS";
                     team[3].PlayerName = "";
                     team[4].PlayerName = "";
                     team[5].PlayerName = "";
@@ -282,11 +305,13 @@ namespace Dice_Cricket
                     team[8].PlayerName = "";
                     team[9].PlayerName = "";
                     team[10].PlayerName = "";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 12:
                     team[0].TeamName = "South Africa";
-                    team[0].PlayerName = "Aidan Markham";
+                    team[0].PlayerName = "Aiden Markram";
                     team[1].PlayerName = "Dean Elgar";
                     team[2].PlayerName = "Hashim Amla";
                     team[3].PlayerName = "AB de Villiers";
@@ -297,13 +322,15 @@ namespace Dice_Cricket
                     team[8].PlayerName = "Khagiso Rabada";
                     team[9].PlayerName = "Dale Steyn";
                     team[10].PlayerName = "Morne Morkel";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 13:
                     team[0].TeamName = "Sri Lanka";
                     team[0].PlayerName = "";
                     team[1].PlayerName = "";
-                    team[2].PlayerName = "";
+                    team[2].PlayerName = "KEEPS";
                     team[3].PlayerName = "";
                     team[4].PlayerName = "";
                     team[5].PlayerName = "";
@@ -312,13 +339,15 @@ namespace Dice_Cricket
                     team[8].PlayerName = "";
                     team[9].PlayerName = "";
                     team[10].PlayerName = "";
+
+                    team[5].IsKeeper = true;
                     break;
 
                 case 14:
                     team[0].TeamName = "West Indies";
                     team[0].PlayerName = "";
                     team[1].PlayerName = "";
-                    team[2].PlayerName = "";
+                    team[2].PlayerName = "KEEPS";
                     team[3].PlayerName = "";
                     team[4].PlayerName = "";
                     team[5].PlayerName = "";
@@ -327,13 +356,14 @@ namespace Dice_Cricket
                     team[8].PlayerName = "";
                     team[9].PlayerName = "";
                     team[10].PlayerName = "";
+                    team[5].IsKeeper = true;
                     break;
 
                 case 15:
                     team[0].TeamName = "Zimbabwe";
                     team[0].PlayerName = "";
                     team[1].PlayerName = "";
-                    team[2].PlayerName = "";
+                    team[2].PlayerName = "KEEPS";
                     team[3].PlayerName = "";
                     team[4].PlayerName = "";
                     team[5].PlayerName = "";
@@ -342,13 +372,14 @@ namespace Dice_Cricket
                     team[8].PlayerName = "";
                     team[9].PlayerName = "";
                     team[10].PlayerName = "";
+                    team[5].IsKeeper = true;
                     break;
 
                 case 16:
                     team[0].TeamName = "Scotland";
                     team[0].PlayerName = "";
                     team[1].PlayerName = "";
-                    team[2].PlayerName = "";
+                    team[2].PlayerName = "KEEPS";
                     team[3].PlayerName = "";
                     team[4].PlayerName = "";
                     team[5].PlayerName = "";
@@ -357,6 +388,7 @@ namespace Dice_Cricket
                     team[8].PlayerName = "";
                     team[9].PlayerName = "";
                     team[10].PlayerName = "";
+                    team[5].IsKeeper = true;
                     break;
             }
 
@@ -393,6 +425,10 @@ namespace Dice_Cricket
             /// </summary>
             public int Score;
 
+            public int BowlingWickets;
+
+            public int FieldingWickets;
+
             /// <summary>
             /// The last batting milestone a batter has reached
             /// </summary>
@@ -402,6 +438,11 @@ namespace Dice_Cricket
             /// Boolean to see if player is a bowler
             /// </summary>
             public bool IsBowler;
+
+            /// <summary>
+            /// Boolean to see if player is wicketkeeper
+            /// </summary>
+            public bool IsKeeper;
 
             /// <summary>
             /// ToString for testing purposes
