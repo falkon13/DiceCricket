@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="TeamSelection.cs" company="Jonathan le Grange">
+// <copyright file="TeamSelection.cs" company="Falkon13">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -13,6 +13,9 @@ namespace Dice_Cricket
     /// </summary>
     public static class TeamSelection
     {
+        /// <summary>
+        /// Number of teams in a tournament
+        /// </summary>
         private const int NumberOfTeams = 16;
 
         /// <summary>
@@ -118,17 +121,23 @@ namespace Dice_Cricket
             }
         }
 
+        /// <summary>
+        /// Computer selects a team as the opponent
+        /// </summary>
+        /// <param name="userTeam">The user team</param>
+        /// <param name="availableTeams">All non user teams in the competition</param>
+        /// <returns>The team to face</returns>
         public static int ComputerSelectingTeam(int userTeam, IList<int> availableTeams)
         {
             Random teamSelect = new Random();
             int team = teamSelect.Next(1, NumberOfTeams);
 
             // Also need to check previous teams
-
             while (!availableTeams.Contains(team))
             {
                 team = teamSelect.Next(1, NumberOfTeams);
             }
+
             return team;
         }
     }

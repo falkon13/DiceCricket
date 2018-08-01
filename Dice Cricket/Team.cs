@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Team.cs" company="Jonathan le Grange">
+// <copyright file="Team.cs" company="Falkon13">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -62,9 +62,9 @@ namespace Dice_Cricket
             Team teamName = new Team();
             TeamDetails[] team = new TeamDetails[11];
 
-            team = GenerateTeamStatus(team);
+            team = this.GenerateTeamStatus(team);
 
-            team = PopulatePlayers(teamSelected, team);
+            team = this.PopulatePlayers(teamSelected, team);
 
             return team;
         }
@@ -192,51 +192,51 @@ namespace Dice_Cricket
 
                 case 5:
                     team[0].TeamName = "Guernsey";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
+                    team[0].PlayerName = string.Empty;
+                    team[1].PlayerName = string.Empty;
                     team[2].PlayerName = "KEEPS";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[3].PlayerName = string.Empty;
+                    team[4].PlayerName = string.Empty;
+                    team[5].PlayerName = string.Empty;
+                    team[6].PlayerName = string.Empty;
+                    team[7].PlayerName = string.Empty;
+                    team[8].PlayerName = string.Empty;
+                    team[9].PlayerName = string.Empty;
+                    team[10].PlayerName = string.Empty;
 
                     team[5].IsKeeper = true;
                     break;
 
                 case 6:
                     team[0].TeamName = "India";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
+                    team[0].PlayerName = string.Empty;
+                    team[1].PlayerName = string.Empty;
                     team[2].PlayerName = "KEEPS";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[3].PlayerName = string.Empty;
+                    team[4].PlayerName = string.Empty;
+                    team[5].PlayerName = string.Empty;
+                    team[6].PlayerName = string.Empty;
+                    team[7].PlayerName = string.Empty;
+                    team[8].PlayerName = string.Empty;
+                    team[9].PlayerName = string.Empty;
+                    team[10].PlayerName = string.Empty;
 
                     team[5].IsKeeper = true;
                     break;
 
                 case 7:
                     team[0].TeamName = "Ireland";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
+                    team[0].PlayerName = string.Empty;
+                    team[1].PlayerName = string.Empty;
                     team[2].PlayerName = "KEEPS";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[3].PlayerName = string.Empty;
+                    team[4].PlayerName = string.Empty;
+                    team[5].PlayerName = string.Empty;
+                    team[6].PlayerName = string.Empty;
+                    team[7].PlayerName = string.Empty;
+                    team[8].PlayerName = string.Empty;
+                    team[9].PlayerName = string.Empty;
+                    team[10].PlayerName = string.Empty;
 
                     team[5].IsKeeper = true;
                     break;
@@ -260,51 +260,51 @@ namespace Dice_Cricket
 
                 case 9:
                     team[0].TeamName = "Netherlands";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
+                    team[0].PlayerName = string.Empty;
+                    team[1].PlayerName = string.Empty;
                     team[2].PlayerName = "KEEPS";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[3].PlayerName = string.Empty;
+                    team[4].PlayerName = string.Empty;
+                    team[5].PlayerName = string.Empty;
+                    team[6].PlayerName = string.Empty;
+                    team[7].PlayerName = string.Empty;
+                    team[8].PlayerName = string.Empty;
+                    team[9].PlayerName = string.Empty;
+                    team[10].PlayerName = string.Empty;
 
                     team[5].IsKeeper = true;
                     break;
 
                 case 10:
                     team[0].TeamName = "New Zealand";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
+                    team[0].PlayerName = string.Empty;
+                    team[1].PlayerName = string.Empty;
                     team[2].PlayerName = "KEEPS";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[3].PlayerName = string.Empty;
+                    team[4].PlayerName = string.Empty;
+                    team[5].PlayerName = string.Empty;
+                    team[6].PlayerName = string.Empty;
+                    team[7].PlayerName = string.Empty;
+                    team[8].PlayerName = string.Empty;
+                    team[9].PlayerName = string.Empty;
+                    team[10].PlayerName = string.Empty;
 
                     team[5].IsKeeper = true;
                     break;
 
                 case 11:
                     team[0].TeamName = "Pakistan";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
+                    team[0].PlayerName = string.Empty;
+                    team[1].PlayerName = string.Empty;
                     team[2].PlayerName = "KEEPS";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[3].PlayerName = string.Empty;
+                    team[4].PlayerName = string.Empty;
+                    team[5].PlayerName = string.Empty;
+                    team[6].PlayerName = string.Empty;
+                    team[7].PlayerName = string.Empty;
+                    team[8].PlayerName = string.Empty;
+                    team[9].PlayerName = string.Empty;
+                    team[10].PlayerName = string.Empty;
 
                     team[5].IsKeeper = true;
                     break;
@@ -328,66 +328,66 @@ namespace Dice_Cricket
 
                 case 13:
                     team[0].TeamName = "Sri Lanka";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
+                    team[0].PlayerName = string.Empty;
+                    team[1].PlayerName = string.Empty;
                     team[2].PlayerName = "KEEPS";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[3].PlayerName = string.Empty;
+                    team[4].PlayerName = string.Empty;
+                    team[5].PlayerName = string.Empty;
+                    team[6].PlayerName = string.Empty;
+                    team[7].PlayerName = string.Empty;
+                    team[8].PlayerName = string.Empty;
+                    team[9].PlayerName = string.Empty;
+                    team[10].PlayerName = string.Empty;
 
                     team[5].IsKeeper = true;
                     break;
 
                 case 14:
                     team[0].TeamName = "West Indies";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
+                    team[0].PlayerName = string.Empty;
+                    team[1].PlayerName = string.Empty;
                     team[2].PlayerName = "KEEPS";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[3].PlayerName = string.Empty;
+                    team[4].PlayerName = string.Empty;
+                    team[5].PlayerName = string.Empty;
+                    team[6].PlayerName = string.Empty;
+                    team[7].PlayerName = string.Empty;
+                    team[8].PlayerName = string.Empty;
+                    team[9].PlayerName = string.Empty;
+                    team[10].PlayerName = string.Empty;
                     team[5].IsKeeper = true;
                     break;
 
                 case 15:
                     team[0].TeamName = "Zimbabwe";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
+                    team[0].PlayerName = string.Empty;
+                    team[1].PlayerName = string.Empty;
                     team[2].PlayerName = "KEEPS";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[3].PlayerName = string.Empty;
+                    team[4].PlayerName = string.Empty;
+                    team[5].PlayerName = string.Empty;
+                    team[6].PlayerName = string.Empty;
+                    team[7].PlayerName = string.Empty;
+                    team[8].PlayerName = string.Empty;
+                    team[9].PlayerName = string.Empty;
+                    team[10].PlayerName = string.Empty;
                     team[5].IsKeeper = true;
                     break;
 
                 case 16:
                     team[0].TeamName = "Scotland";
-                    team[0].PlayerName = "";
-                    team[1].PlayerName = "";
+                    team[0].PlayerName = string.Empty;
+                    team[1].PlayerName = string.Empty;
                     team[2].PlayerName = "KEEPS";
-                    team[3].PlayerName = "";
-                    team[4].PlayerName = "";
-                    team[5].PlayerName = "";
-                    team[6].PlayerName = "";
-                    team[7].PlayerName = "";
-                    team[8].PlayerName = "";
-                    team[9].PlayerName = "";
-                    team[10].PlayerName = "";
+                    team[3].PlayerName = string.Empty;
+                    team[4].PlayerName = string.Empty;
+                    team[5].PlayerName = string.Empty;
+                    team[6].PlayerName = string.Empty;
+                    team[7].PlayerName = string.Empty;
+                    team[8].PlayerName = string.Empty;
+                    team[9].PlayerName = string.Empty;
+                    team[10].PlayerName = string.Empty;
                     team[5].IsKeeper = true;
                     break;
             }
@@ -425,8 +425,14 @@ namespace Dice_Cricket
             /// </summary>
             public int Score;
 
+            /// <summary>
+            /// Bowling wickets taken by the player
+            /// </summary>
             public int BowlingWickets;
 
+            /// <summary>
+            /// Fielding wickets taken by the player
+            /// </summary>
             public int FieldingWickets;
 
             /// <summary>

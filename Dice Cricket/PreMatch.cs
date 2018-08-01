@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="PreMatch.cs" company="Jonathan le Grange">
+// <copyright file="PreMatch.cs" company="Falkon13">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -21,7 +21,7 @@ namespace Dice_Cricket
         private const int TeamSize = 11;
 
         /// <summary>
-        /// List of all available teams
+        /// Gets or sets a list of all available teams
         /// </summary>
         public IList<int> AvailableTeams { get; set; } = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 

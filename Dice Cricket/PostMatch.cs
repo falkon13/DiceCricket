@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="PostMatch.cs" company="Jonathan le Grange">
+// <copyright file="PostMatch.cs" company="Falkon13">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -36,6 +36,11 @@ namespace Dice_Cricket
             return teams;
         }
 
+        /// <summary>
+        /// Calculates the best player based on their performance
+        /// </summary>
+        /// <param name="computerTeamDetails">Computer team and their details</param>
+        /// <param name="userTeamDetails">Player team and their details</param>
         public void CalculateBestPlayer(Team.TeamDetails[] computerTeamDetails, Team.TeamDetails[] userTeamDetails)
         {
             int[] computerScore = new int[11];
@@ -43,15 +48,17 @@ namespace Dice_Cricket
             for (int i = 0; i < computerTeamDetails.Length; i++)
             {
                 computerScore[i] += computerTeamDetails[i].Score;
-                computerScore[i] += (computerTeamDetails[i].BowlingWickets * 50);
-                computerScore[i] += (computerTeamDetails[i].FieldingWickets * 25);
+                computerScore[i] += computerTeamDetails[i].BowlingWickets * 50;
+                computerScore[i] += computerTeamDetails[i].FieldingWickets * 25;
             }
+
             for (int i = 0; i < userTeamDetails.Length; i++)
             {
                 playerScore[i] += userTeamDetails[i].Score;
-                playerScore[i] += (userTeamDetails[i].BowlingWickets * 50);
-                playerScore[i] += (userTeamDetails[i].FieldingWickets * 25);
+                playerScore[i] += userTeamDetails[i].BowlingWickets * 50;
+                playerScore[i] += userTeamDetails[i].FieldingWickets * 25;
             }
+
             int highestComputerScore = computerScore.ToList().IndexOf(computerScore.Max());
             int highestPlayerScore = playerScore.ToList().IndexOf(playerScore.Max());
             if (computerScore.Max() > playerScore.Max())
